@@ -71,13 +71,15 @@ The standard workflow used in professional settings looks something like this:
 - `feature-f1` branches are created off of `develop` for any significant features. when they're merged back in, `develop` is also merged into assorted appropriate branches
 - `bugfix-b1` branches are created off of `develop` to fix bugs and are treated like features, though they can be used for a separate release.
 - `hotfix-h1` branches are created off of `master` for emergency bugfixes ("hotfixes") and merged back into `master` (with a new version number, v1.3.3) and also into `develop`.
-See ["A successful Git branching model"](http://nvie.com/posts/a-successful-git-branching-model/) for detail. Again, it's not clear that the entire formal model is necessary for all of our repos, but the more widely-used a project of ours is (more people use it or more projects use it), the closer we should try to hew to that model.
+
+See ["A successful Git branching model"](http://nvie.com/posts/a-successful-git-branching-model/) for more detail on this model. Again, it's not clear that the entire formal model is necessary for all of our repos, but the more widely-used a project of ours is (more people use it or more projects use it), the closer we should try to hew to that model.
 
 Takeaways:
 ----
 Make sure everything you do in git makes it easier for your future self to
 - go back to a specific version of the code
 - not battle with your collaborators.
+
 Everything here is derived from those two principles.
 
 
