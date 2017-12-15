@@ -11,10 +11,10 @@ Git is an abstraction of the idea of taking lots of backups. We want to record:
 
 Features (different from other VCSs/DVCSs):
 - *local* copy of repo
-.- each clone has all info and is symmetric (no need to push to a common server, unlike CVS/SVN)
-.- push/pull moves changes between clones
-.- can push/pull between *any* two clones
-.- clone on github is convenient central access point but not actually special
+ - each clone has all info and is symmetric (no need to push to a common server, unlike CVS/SVN)
+ - push/pull moves changes between clones
+ - can push/pull between *any* two clones
+ - clone on github is convenient central access point but not actually special
 - cryptographically hard to break the tree (commits named by SHA256 hash)
 - staging area to decide what workflow changes to add to a commit (unlike Hg)
 - ability to rewrite history (this is dangerous, make sure you know what you're doing before doing this; I'm not familiar enough with it to discuss)
@@ -37,10 +37,10 @@ So, some general principles:
 - Don't commit any files that you don't want to share with everyone! The `.gitignore` file in the root of the directory will tell git not to track certain files. For example, my `.gitignore` files almost always look like this (without the comments):
 
 ```
-*.pyc	# don't include the compiled .py files because they might silently cache old versions, let each clone generate them separately. Similarly, if you're in a latex repo, add *.bbl, 
+*.pyc		# don't include the compiled .py files because they might silently cache old versions, let each clone generate them separately. Similarly, if you're in a latex repo, add *.bbl, 
 .*project	# your mileage may vary, but I don't commit my Eclipse project file (or the equivalent for your IDE) because all of the paths are custom to my computer.
-tmp/*	# if your script generates some output or test logs, you likely don't want to make them part of the permanent record
-*~		# if your editor generates lock files (e.g. Emacs), don't commit the lock files
+tmp/*		# if your script generates some output or test logs, you likely don't want to make them part of the permanent record
+*~			# if your editor generates lock files (e.g. Emacs), don't commit the lock files
 ```
 
 In general, avoid doing `git commit -a` unless you're certain everything is worth sharing. It takes an extra few lines to manually add in only the files you care about with `git add my_change.py; git commit`. But if you're trying to track down a bug that was introduced in the code in the few minutes before a demo, you'll be grateful. Similarly, if you try to deploy the code on a new computer, if you e.g. fixed a bug but never ran the code, so you have correct `.py` files but incorrect `.pyc` files, your code will silently still replicate the bug even though if you read the code your fix will be there. Make life easier for yourself.
@@ -48,8 +48,8 @@ In general, avoid doing `git commit -a` unless you're certain everything is wort
 - Make _atomic_ commits. Basically, each commit should ideally represent a single idea that can be simply summarized in a single commit message. Philosophy varies on this, but a good commit message might be "changed function X to take an additional input." A very bad commit would be one that message is "all changes I made on Dec 18". Again, YMMV with academic code where git is used as backup (I do the second all the time for one-off analysis code), but if you're trying to find the version where function X had only the original commit, being able to (1) read commit messages to figure out which one to go back to and (2) more importantly, actually have exist a single commit to go back to that represents only the change you want rather than having to disentangle a massive collection of unrelated changes will make your life a lot easier. There is lots of discussion of what a good commit should be, and don't worry too much about making them perfect (though we can discuss better/less good practices), but have in mind "if I am trying to revert these changes, or merge them with someone else's, will my future self thank me?".
 
 - Use branches aggressively. There are a number of different workflows for how to use branches, and we can discuss what best fits our different repo styles. But in general, the principle here is *keep different projects as separate as possible*. Many guides suggest that before beginning any self-contained feature, you should create a branch. Then you can do development on that branch, and only once it's complete do you merge it back into the previous tree. Say A and B are working on two different features, Fa and Fb. Let's look at the result for two different philosophies:
-.1. A and B work simultaneously on one `develop` branch.
-.2. A and B each create separate branches, `feature-Fa` and `feature-Fb`, and work on those branches.
+ 1. A and B work simultaneously on one `develop` branch.
+ 2. A and B each create separate branches, `feature-Fa` and `feature-Fb`, and work on those branches.
 
 Case 1:
 1. A does some partial work and commits to `develop`.
@@ -67,7 +67,7 @@ Case 2:
 The standard workflow used in professional settings looks something like this:
 - `master` is used only for released versions (e.g. 1.3.2)
 - `develop` has ongoing work for the next release version
-.- if there are two different types of development going on, e.g. for v1.4 and v2.0, they go on separate branches
+ - if there are two different types of development going on, e.g. for v1.4 and v2.0, they go on separate branches
 - `feature-f1` branches are created off of `develop` for any significant features. when they're merged back in, `develop` is also merged into assorted appropriate branches
 - `bugfix-b1` branches are created off of `develop` to fix bugs and are treated like features, though they can be used for a separate release.
 - `hotfix-h1` branches are created off of `master` for emergency bugfixes ("hotfixes") and merged back into `master` (with a new version number, v1.3.3) and also into `develop`.
